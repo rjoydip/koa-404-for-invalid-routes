@@ -95,7 +95,7 @@ export const routes = [
         }
       }
       else {
-        ctx.status = 403
+        ctx.status = 422
         ctx.body = {
           message: 'User ID Not Valid',
           data: {},
@@ -120,7 +120,7 @@ export const routes = [
         await next()
       }
       else {
-        ctx.status = 403
+        ctx.status = 422
         ctx.body = {
           message: 'User Data Invalid',
           data: {},
