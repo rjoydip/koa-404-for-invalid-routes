@@ -94,7 +94,7 @@ describe('❯ Validate request', () => {
       })
       .set('Accept', 'application/json')
     expect(invalidResponse.headers['content-type']).toMatch(/json/)
-    expect(invalidResponse.status).toEqual(403)
+    expect(invalidResponse.status).toEqual(422)
     expect(invalidResponse.body.error.length).toBe(1)
     expect(invalidResponse.body.error[0].input).toStrictEqual('Test')
   })

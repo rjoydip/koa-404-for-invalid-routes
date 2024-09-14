@@ -28,7 +28,7 @@ app.use(ip({
   whitelist: ['127.0.0.1'],
   blacklist: ['192.168.0.*', '8.8.8.[0-3]'],
   handler: async (ctx: Koa.Context) => {
-    ctx.status = 403
+    ctx.status = 422
   },
 }))
 app.use(ratelimit({
@@ -60,7 +60,7 @@ app.use(async (ctx, next) => {
 app.use(async (ctx, next) => {
   const requestedUrl = ctx.request.path
 
-  // Print all routes
+  // Get all registered routes
   const registeredRoutes = getRegisteredRoutes(router)
 
   // Check if the requested URL matches any route regex pattern
@@ -71,7 +71,7 @@ app.use(async (ctx, next) => {
     ctx.body = { message: 'Route Not Found' }
   }
   else {
-    await next() // Proceed to the next middleware if route matches
+    await next()
   }
 })
 
@@ -81,10 +81,10 @@ app.use(async (_, next) => {
   await next()
 })
 
-// Custom middlewares
+// Custom routes
 routes.map(r => router[r.method.toLocaleLowerCase() as MethodTypes](r.name, r.path, ...r.middleware, r.handler))
 
-// Apply the defined routes
+// Dispatch routes and allow OPTIONS request method
 app.use(router.routes())
 app.use(router.allowedMethods())
 
