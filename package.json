@@ -43,7 +43,7 @@
     "lint": "eslint .",
     "start": "esno src/index.ts",
     "start:dev": "esno watch src/index.ts",
-    "test": "vitest",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "prepare": "simple-git-hooks"
   },
