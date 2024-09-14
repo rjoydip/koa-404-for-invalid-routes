@@ -57,7 +57,6 @@
     "koa-json": "^2.0.2",
     "koa-ratelimit": "^5.1.0",
     "koa-router": "^13.0.1",
-    "path-to-regexp": "^8.1.0",
     "valibot": "^0.41.0"
   },
   "devDependencies": {

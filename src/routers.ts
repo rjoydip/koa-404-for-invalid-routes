@@ -1,6 +1,5 @@
 import type Koa from 'koa'
 import consola from 'consola'
-import { pathToRegexp } from 'path-to-regexp'
 import { safeParse } from 'valibot'
 import { getUser, getUsers, isDBUp, isRedisUp, pingDB, setUser } from './db'
 import { UserSchema } from './schema'
@@ -10,7 +9,6 @@ export const routes = [
     name: 'Root',
     path: '/',
     method: 'GET',
-    regex: pathToRegexp('/'),
     middleware: [],
     handler: async (ctx: Koa.Context) => {
       ctx.status = 200
@@ -25,7 +23,6 @@ export const routes = [
     name: 'Status',
     path: '/status',
     method: 'GET',
-    regex: pathToRegexp('/status'),
     middleware: [],
     handler: async (ctx: Koa.Context) => {
       const ping = await pingDB()
@@ -43,7 +40,6 @@ export const routes = [
     name: 'Health',
     path: '/health',
     method: 'GET',
-    regex: pathToRegexp('/health'),
     middleware: [],
     handler: async (ctx: Koa.Context) => {
       const db = await isDBUp()
@@ -63,7 +59,6 @@ export const routes = [
     name: 'GetUsers',
     path: '/users',
     method: 'GET',
-    regex: pathToRegexp('/users'),
     middleware: [],
     handler: async (ctx: Koa.Context) => {
       const users = await getUsers()
@@ -79,7 +74,6 @@ export const routes = [
     name: 'GetUser',
     path: '/user/:id',
     method: 'GET',
-    regex: pathToRegexp('/user/:id'),
     middleware: [async (ctx: Koa.Context, next: Koa.Next) => {
       await next()
       consola.info('USER ID: ', ctx.params.id)
@@ -112,7 +106,6 @@ export const routes = [
     name: 'PostUser',
     path: '/user',
     method: 'POST',
-    regex: pathToRegexp('/user'),
     middleware: [async (ctx: Koa.Context, next: Koa.Next) => {
       const payload = ctx.request.body
       const result = safeParse(UserSchema, { _id: '', ...payload })
